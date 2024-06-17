@@ -1,9 +1,10 @@
-from distance import distance
+from distance import distance, total_distance
 
 class Solver_bitonic:
     def __init__(self, cities):
+        self.cities = cities
         self.cities_info = sorted(list(enumerate(cities)),
-                                  key=lambda city_info: city_info[1][0] + city_info[1][1])
+                                  key=lambda city_info: city_info[1][0]) # + city_info[1][1])
         self.recursive_called = {}
 
     # Input  : [(original_index, (x, y))], index of the list, index of the list
@@ -22,10 +23,6 @@ class Solver_bitonic:
             return (ps, ds.copy())
         
         if num_cities == 2:
-            # min_index = min(self.cities_info[0][0], self.cities_info[1][0])
-            # max_index = max(self.cities_info[0][0], self.cities_info[1][0])
-            # return (2 * distance(self.cities_info[0][1], self.cities_info[1][1]),
-            #         [(min_index, max_index), (min_index, max_index)])
             return (2 * distance(self.cities_info[0][1], self.cities_info[1][1]),
                     {(min(self.cities_info[0][0], self.cities_info[1][0]),
                       max(self.cities_info[0][0], self.cities_info[1][0]))})
@@ -65,7 +62,7 @@ class Solver_bitonic:
         return (min_ds, min_ps)
 
     def solve(self):
-        _, ps = self.recursive_bitonic(len(self.cities_info))
+        ds, ps = self.recursive_bitonic(len(self.cities_info))
         tour = [self.cities_info[0][0]]
         while ps:
             for p in ps:
@@ -73,6 +70,4 @@ class Solver_bitonic:
                     tour.append(p[1] if tour[-1] == p[0] else p[0])
                     ps.remove(p)
                     break
-        # assert tour[0] == tour[-1]
-        # return tour[:-1]
-        return tour
+        return tour, ds

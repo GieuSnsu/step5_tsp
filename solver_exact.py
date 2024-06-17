@@ -15,4 +15,4 @@ class Solver_exact:
             if path_length < shortest_path:
                 shortest_tour = tour
                 shortest_path = path_length
-        return shortest_tour
+        return shortest_tour, shortest_path

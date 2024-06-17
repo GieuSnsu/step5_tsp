@@ -1,4 +1,3 @@
-import math
 from distance import distance
 
 class Solver_greedy:
@@ -16,10 +15,14 @@ class Solver_greedy:
         current_city = 0
         unvisited = set(range(1, num_cities))
         tour = [current_city]
+        path_length = 0
 
         while unvisited:
             next_city = min(unvisited, key=lambda city: dist[current_city][city])
             unvisited.remove(next_city)
             tour.append(next_city)
+            path_length += dist[current_city][next_city]
             current_city = next_city
-        return tour
+        
+        path_length += dist[current_city][0]
+        return tour, path_length

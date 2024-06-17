@@ -1,21 +1,21 @@
-import math
 import random
 import matplotlib.pyplot as plt
 
 from distance import total_distance
 from solver_random import Solver_random
 from solver_greedy import Solver_greedy
-# import solver_exact
+# from solver_exact import Solver_exact
 from solver_2opt import Solver_2opt
-from solver_bitonic import Solver_bitonic
+# from solver_bitonic import Solver_bitonic
 
-# NUM_CITIES_LIST = [8]
+# NUM_CITIES_LIST = [512]
 NUM_CITIES_LIST = [5, 8, 16, 64, 128, 512, 2048]
-SOLVERS = [Solver_random, # in the order of cities generated
-           Solver_greedy, # visit the closest cities next
-        #    Solver_exact,  # try all possible solutions O(n!)
-           Solver_2opt,
-           Solver_bitonic]
+SOLVERS = [Solver_random,   # in the order of cities generated
+        #    Solver_exact,    # try all possible solutions O(n!)
+           Solver_greedy,   # visit the closest cities next
+           Solver_2opt,     # swap two crossing paths
+        #    Solver_bitonic,  # from the leftmost city, go to the rightmost, then come back
+        ]
 
 def generate_cities(num_cities, max_x=1600.0, max_y=900.0, seed=1):
     random.seed(seed)
@@ -30,15 +30,14 @@ def main():
         print('Challenge' + str(i))
         for solver in SOLVERS:
             solver_name = solver.__name__.split('_')[1]
-            tour = solver(cities).solve()
+            tour, path_length = solver(cities).solve()
             assert len(tour) == len(cities)
-            path_length = total_distance(cities, tour)
             print(solver_name + ': ' + str(path_length))
+
             # plot the graph
-            if solver == Solver_random and i > 6:
-                xs, ys = zip(*[cities[i] for i in tour])
-                plt.plot(xs, ys, marker='o')
-                plt.show()
+            # xs, ys = zip(*[cities[i] for i in tour])
+            # plt.plot(xs, ys, marker='o')
+            # plt.show()
         print()
 
 if __name__ == '__main__':
