@@ -1,4 +1,4 @@
-from distance import distance, total_distance
+from distance import distance
 
 class Solver_bitonic:
     def __init__(self, cities):
