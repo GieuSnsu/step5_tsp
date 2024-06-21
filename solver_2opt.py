@@ -29,7 +29,7 @@ class Solver_2opt:
                     # if i to (i + 1) and j to (j + 1) intersect
                     if (((d1 > 0 and d2 < 0) or (d1 < 0 and d2 > 0)) and
                         ((d3 > 0 and d4 < 0) or (d3 < 0 and d4 > 0))):
-                        self.__delattr__path_length -= distance(c1, c2)
+                        self.path_length -= distance(c1, c2)
                         self.path_length -= distance(c3, c4)
                         self.path_length += distance(c1, c3)
                         self.path_length += distance(c2, c4)

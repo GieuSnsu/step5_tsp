@@ -6,11 +6,12 @@ from solver_random import Solver_random
 from solver_greedy import Solver_greedy
 # from solver_exact import Solver_exact
 from solver_2opt import Solver_2opt
-from solver_bitonic import Solver_bitonic
+# from solver_bitonic import Solver_bitonic
 from solver_insertion import Solver_insertion
 from solver_mst import Solver_mst
 
-NUM_CITIES_LIST = [5, 8, 16, 64, 128, 512, 2048]
+NUM_CITIES_LIST = [8192]
+# NUM_CITIES_LIST = [5, 8, 16, 64, 128, 512, 2048]
 SOLVERS = [
            Solver_random,    # in the order of cities generated
         #    Solver_exact,     # try all possible solutions O(n!)
@@ -44,10 +45,10 @@ def main():
             print(solver_name + "_2opt: " + str(path_length))
 
             # plot the graph
-            if solver == Solver_mst:
-                xs, ys = zip(*[cities[i] for i in tour])
-                plt.plot(xs, ys, marker='o')
-                plt.show()
+            xs, ys = zip(*[cities[i] for i in tour])
+            plt.plot(xs, ys, marker='o')
+            plt.show()
+
         print()
 
 if __name__ == '__main__':
